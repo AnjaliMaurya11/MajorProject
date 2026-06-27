@@ -1,0 +1,31 @@
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+     <a class="navbar-brand" href="/listings"
+      ><i class="fa-solid fa-mountain-city"></i
+    ></a>
+    
+    <div class="navbar" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+    </div>
+     <div class="navbar-nav ms-auto search-nav">
+        <form class="d-flex ms-3" method="GET"  action="/listings">
+         <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search" value="<%= typeof search !== 'undefined' ? search : '' %>">
+         <button class="search-btn" type="submit"><i class="fa-brands fa-sistrix fa-lg" ></i></button>
+        </form>
+      </div>
+    
+    <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new">Become a host</a>
+        <% if (!currentUser) { %>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" class="nav-link">Sign Up</a>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="nav-link">Login</a>
+        <% } else { %>
+          <a class="nav-link" href="/bookings/mybookings">My Bookings</a>
+          <a class="nav-link" href="/users/logout"><b>Log out</b></a>
+        <% } %>
+      </div>
+  </div>
+</nav>

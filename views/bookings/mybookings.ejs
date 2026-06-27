@@ -1,0 +1,86 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-4">
+  <h2>My Bookings</h2>
+  <hr/>
+
+  <!-- Current Bookings -->
+  <h4 class="mt-4">Current & Upcoming Bookings</h4>
+  <% if(currentBookings.length === 0){ %>
+    <p class="text-muted">No current bookings found.</p>
+  <% } else { %>
+    <div class="row row-cols-lg-2 row-cols-md-1">
+      <% for(let booking of currentBookings){ %>
+        <div class="col mb-4">
+          <div class="card h-100 border-success">
+            <div class="row g-0">
+              <div class="col-4">
+                <img
+                  src="<%= booking.listing.image.url %>"
+                  class="img-fluid rounded-start"
+                  style="height: 150px; object-fit: cover;"
+                />
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <span class="badge bg-success mb-1">Active</span>
+                  <h6><%= booking.listing.title %></h6>
+                  <p class="text-muted mb-1">
+                     <%= booking.listing.location %>, <%= booking.listing.country %>
+                  </p>
+                  <p class="mb-1"> Check-in: <b><%= booking.checkIn.toDateString() %></b></p>
+                  <p class="mb-1"> Check-out: <b><%= booking.checkOut.toDateString() %></b></p>
+                  <p class="mb-1"> Guests: <b><%= booking.guests %></b></p>
+                  <p class="fw-bold">Total: ₹<%= booking.totalPrice.toLocaleString("en-IN") %></p>
+                  <a href="/listings/<%= booking.listing._id %>" class="btn btn-sm btn-outline-dark">
+                    View Listing
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
+
+  <!-- Previous Bookings -->
+  <h4 class="mt-4">Previous Bookings</h4>
+  <% if(previousBookings.length === 0){ %>
+    <p class="text-muted">No previous bookings found.</p>
+  <% } else { %>
+    <div class="row row-cols-lg-2 row-cols-md-1">
+      <% for(let booking of previousBookings){ %>
+        <div class="col mb-4">
+          <div class="card h-100 border-secondary">
+            <div class="row g-0">
+              <div class="col-4">
+                <img
+                  src="<%= booking.listing.image.url %>"
+                  class="img-fluid rounded-start"
+                  style="height: 150px; object-fit: cover; filter: grayscale(50%);"
+                />
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <span class="badge bg-secondary mb-1">Completed</span>
+                  <h6><%= booking.listing.title %></h6>
+                  <p class="text-muted mb-1">
+                     <%= booking.listing.location %>, <%= booking.listing.country %>
+                  </p>
+                  <p class="mb-1">Check-in: <b><%= booking.checkIn.toDateString() %></b></p>
+                  <p class="mb-1"> Check-out: <b><%= booking.checkOut.toDateString() %></b></p>
+                  <p class="mb-1"> Guests: <b><%= booking.guests %></b></p>
+                  <p class="fw-bold">Total: ₹<%= booking.totalPrice.toLocaleString("en-IN") %></p>
+                  <a href="/listings/<%= booking.listing._id %>" class="btn btn-sm btn-outline-dark">
+                    View Listing
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
+</div>

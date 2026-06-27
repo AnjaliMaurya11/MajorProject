@@ -1,0 +1,83 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <!-- Listing Summary -->
+      <div class="card mb-4">
+        <div class="row g-0">
+          <div class="col-4">
+            <img
+              src="<%= listing.image.url %>"
+              class="img-fluid rounded-start"
+              style="height: 120px; object-fit: cover"
+            />
+          </div>
+          <div class="col-8">
+            <div class="card-body">
+              <h6 class="card-title"><%= listing.title %></h6>
+              <p class="card-text text-muted">
+                <%= listing.location %>, <%= listing.country %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Summary -->
+      <h4>Your Booking Summary</h4>
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-2">
+            <span> Check-in</span>
+            <b><%= new Date(checkIn).toDateString() %></b>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span> Check-out</span>
+            <b><%= new Date(checkOut).toDateString() %></b>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span> Guests</span>
+            <b><%= guests %></b>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between mb-2">
+            <span
+              >₹<%= listing.price.toLocaleString("en-IN") %> x <%= nights %>
+              nights</span
+            >
+            <span>₹<%= totalPrice.toLocaleString("en-IN") %></span>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between fw-bold fs-5">
+            <span>Total</span>
+            <span>₹<%= totalPrice.toLocaleString("en-IN") %></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirm Form -->
+      <form method="POST" action="/listings/<%= listing._id %>/bookings">
+        <!-- Hidden fields to pass data -->
+        <input type="hidden" name="booking[checkIn]" value="<%= checkIn %>" />
+        <input type="hidden" name="booking[checkOut]" value="<%= checkOut %>" />
+        <input type="hidden" name="booking[guests]" value="<%= guests %>" />
+        <input
+          type="hidden"
+          name="booking[totalPrice]"
+          value="<%= totalPrice %>"
+        />
+
+        <button class="btn btn-danger w-100 mb-2" type="submit">
+          Confirm Booking
+        </button>
+        <a
+          href="/listings/<%= listing._id %>"
+          class="btn btn-outline-dark w-100"
+        >
+          Go Back
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
