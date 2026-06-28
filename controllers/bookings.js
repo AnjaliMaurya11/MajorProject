@@ -4,10 +4,8 @@ const User = require("../models/user");
 
 module.exports.BookingDetails = async (req, res) => {
   const { id } = req.params;
-  console.log("Booking route hit!"); // ← add this
-  console.log("Params:", req.params);
   const listing = await Listing.findById(id);
-  const { checkIn, checkOut, guests } = req.query; // get from URL params
+  const { checkIn, checkOut, guests } = req.query;
 
   // Calculate nights and total price
   const checkInDate = new Date(checkIn);

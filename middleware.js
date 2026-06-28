@@ -2,6 +2,8 @@ const Listing = require("./models/listing");
 const Review = require("./models/review");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
+const multer = require("multer");
+const { storage } = require("./cloudConfig");
 
 //middleware for schema validation
 module.exports.validateListing = (req, res, next) => {
@@ -52,6 +54,7 @@ module.exports.isOwner = async (req, res, next) => {
   next();
 };
 
+//review author check
 module.exports.isReviewAuthor = async (req, res, next) => {
   let { id, reviewId } = req.params;
   const review = await Review.findById(reviewId);
@@ -61,3 +64,18 @@ module.exports.isReviewAuthor = async (req, res, next) => {
   }
   next();
 };
+
+//Image validation
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only JPEG, PNG, and JPG images are allowed."));
+  }
+};
+module.exports.upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter,
+});
