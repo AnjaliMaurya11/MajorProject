@@ -31,7 +31,12 @@
           name="listing[image]"
           type="file"
           class="form-control"
+          accept="image/jpeg,image/png"
+          onchange="validateImageSize(this)"
         />
+          <div id="image-error" class="text-danger mt-1" style="font-size: 14px; display: none;"></div>
+          <div id="image-info" class="text-muted mt-1" style="font-size: 13px; display: none;"></div>
+          <img id="image-preview" src="" alt="Image Preview" />
       </div>
       <div class="row">
         <div class="mb-3 col-md-4">
