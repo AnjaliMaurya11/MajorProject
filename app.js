@@ -42,6 +42,10 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   crypto: {
@@ -100,10 +104,6 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong!" } = err;
   res.status(statusCode).render("error.ejs", { message });
-});
-
-app.get("/", (req, res) => {
-  res.redirect("/listings");
 });
 
 app.listen(8080, () => {
