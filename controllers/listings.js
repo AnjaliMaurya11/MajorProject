@@ -13,7 +13,7 @@ module.exports.index = async (req, res) => {
         { description: { $regex: search, $options: "i" } },
       ],
     });
-    res.render("listings/index", { allListings, search }); // pass search term back
+    res.render("listings/index", { allListings, search });
   } else {
     const allListings = await Listing.find({});
     res.render("listings/index", { allListings, search: "" });

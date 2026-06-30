@@ -10,14 +10,14 @@
   </p>
 
   <!-- Image -->
- <div class="image-wrapper">
-  <img
+  <div class="image-wrapper">
+   <img
     src="<%= listing.image.url %>"
     class="listing-img"
     src="<%= listing.image.url %>"
     alt="listing-image"
-  />
-</div>
+   />
+  </div>
 
   <div class="row mt-4">
 
@@ -130,42 +130,55 @@
 
     <!-- Booking Card -->
     <div class="col-lg-4 offset-lg-1 booking-card">
-      <% if(currentUser && !listing.owner._id.equals(currentUser._id)){ %>
-        <div class="card shadow-sm" >
-          <div class="card-body p-4">
-            <h5 class="mb-3">
-              ₹<%= listing.price.toLocaleString("en-IN") %>
-              <span class="fw-normal fs-6 text-muted">/ night</span>
-            </h5>
-
-            <form method="GET" action="/listings/<%= listing._id %>/bookings/new">
-              <div class="row g-0 border rounded mb-3">
-                <div class="col-6 p-2 border-end">
-                  <label class="form-label fw-bold">Check-in</label>
-                  <input type="date" name="checkIn" class="form-control border-0 p-0" 
-                    min="<%= new Date().toISOString().split('T')[0] %>" required/>
-                </div>
-                <div class="col-6 p-2">
-                  <label class="form-label fw-bold" >Check-out</label>
-                  <input type="date" name="checkOut" class="form-control border-0 p-0" 
-                    min="<%= new Date().toISOString().split('T')[0] %>" required/>
-                </div>
-              </div>
-
-              <div class="border rounded p-2 mb-3">
-                <label class="form-label fw-bold mb-0" >Guests</label>
-                <input type="number" name="guests" class="form-control border-0 p-0" min="1" max="10"
-                  placeholder="Enter number of guests"  required/>
-              </div>
-
-              <button class="btn w-100 mb-2 text-white" style="background:#fe424d;">Reserve</button>
-              <p class="text-center text-muted" style="font-size:12px;">You won't be charged yet</p>
-            </form>
+       <div class="card shadow-sm">
+         <div class="card-body p-4">
+          <h5 class="mb-3">
+           ₹<%= listing.price.toLocaleString("en-IN") %>
+           <span class="fw-normal fs-6 text-muted">/ night</span>
+          </h5>
+          <form method="GET" action="/listings/<%= listing._id %>/bookings/new">
+           <div class="row g-0 border rounded mb-3">
+             <div class="col-6 p-2 border-end">
+               <label class="form-label fw-bold">Check-in</label>
+               <input type="date" name="checkIn" class="form-control border-0 p-0"
+                min="<%= new Date().toISOString().split('T')[0] %>" required/>
+             </div>
+             <div class="col-6 p-2">
+               <label class="form-label fw-bold">Check-out</label>
+               <input type="date" name="checkOut" class="form-control border-0 p-0"
+               min="<%= new Date().toISOString().split('T')[0] %>" required/>
+             </div>
+           </div>
+           <div class="border rounded p-2 mb-3">
+             <label class="form-label fw-bold mb-0">Guests</label>
+             <input type="number" name="guests" class="form-control border-0 p-0" min="1" max="10"
+              placeholder="Enter number of guests" required/>
+           </div>
+            <!-- Different button based on login status -->
+           <% if(currentUser){ %>
+             <% if(listing.owner._id.equals(currentUser._id)){ %>
+               <!-- Owner -->
+               <button class="btn w-100 mb-2 btn-secondary" disabled>
+                 You own this listing
+               </button>
+              <% } else { %>
+               <!-- Logged in user -->
+               <button class="btn w-100 mb-2 text-white" style="background:#fe424d;" type="submit">
+                 Reserve
+               </button>
+              <% } %>
+            <% } else { %>
+              <!-- Not logged in  -->
+              <button type="button" class="btn w-100 mb-2 text-white" style="background:#fe424d;"
+               data-bs-toggle="modal" data-bs-target="#loginModal" data-redirect="/listings/<%= listing._id %>">
+               Login to Reserve
+              </button>
+            <% } %>
+             <p class="text-center text-muted" style="font-size:12px;">You won't be charged yet</p>
+          </form>     
          </div>
-        </div>
-      <% } %>
-    </div>
-
+       </div>
+     </div>
   </div>
 </div>
 

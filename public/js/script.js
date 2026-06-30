@@ -30,3 +30,11 @@ document.addEventListener("hidden.bs.modal", function () {
   const backdrops = document.querySelectorAll(".modal-backdrop");
   backdrops.forEach((backdrop) => backdrop.remove());
 });
+
+const loginModal = document.getElementById("loginModal");
+
+loginModal.addEventListener("show.bs.modal", function (e) {
+  const button = e.relatedTarget;
+  const redirectUrl = button ? button.getAttribute("data-redirect") : null;
+  console.log("redirectUrl:", redirectUrl);
+});

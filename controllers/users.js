@@ -20,8 +20,10 @@ module.exports.postSignup = async (req, res) => {
 };
 
 module.exports.postLogin = async (req, res) => {
-  req.flash("success", "Welcome back! You have successfully logged in.");
-  res.redirect(res.locals.redirectUrl || "/listings"); //if login in done directly from login page then isloggedin middleware will not be called we need to provide a default redirect URL in that case.
+  req.flash("success", "Welcome back!");
+  const redirectUrl =
+    req.body.redirectUrl || res.locals.redirectUrl || "/listings";
+  res.redirect(redirectUrl);
 };
 
 module.exports.logout = (req, res) => {
